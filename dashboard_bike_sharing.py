@@ -41,11 +41,13 @@ if st.sidebar.checkbox("Show Summary Statistics"):
     st.write(data.describe())
 
 
-st.sidebar.markdown('**Weather:**')
-st.sidebar.markdown('1: Clear, Few clouds, Partly cloudy, Partly cloudy')
-st.sidebar.markdown('2: Mist + Cloudy, Mist + Broken clouds, Mist + Few clouds, Mist')
-st.sidebar.markdown('3: Light Snow, Light Rain + Thunderstorm + Scattered clouds, Light Rain + Scattered clouds')
-st.sidebar.markdown('4: Heavy Rain + Ice Pallets + Thunderstorm + Mist, Snow + Fog')
+st.sidebar.markdown('**Cuaca:**')
+st.sidebar.markdown('Cuaca Cerah / Berawan: Clear, Few clouds, Partly cloudy')
+st.sidebar.markdown('Kabut / Awan Tebal: Mist, Cloudy, Broken clouds, Fog')
+st.sidebar.markdown('Hujan Ringan / Salju: Light Rain, Light Snow, Scattered clouds')
+st.sidebar.markdown('Cuaca Ekstrem: Heavy Rain, Thunderstorm, Ice Pellets, Snow')
+
+
 
 
 
@@ -57,11 +59,11 @@ with col1:
     # st.subheader("Season-wise Bike Share Count")
 
     # Mapping dari angka ke label musim
-    season_mapping = {1: "spring", 2: "summer", 3: "fall", 4: "winter"}
-    data["season_label"] = data["season"].map(season_mapping)
+    season_mapping = {1: "semi", 2: "panas", 3: "gugur", 4: "dingin"}
+    data["musim_label"] = data["season"].map(season_mapping)
 
-    season_count = data.groupby("season_label")["cnt"].sum().reset_index()
-    fig_season_count = px.bar(season_count, x="season_label",
+    season_count = data.groupby("musim_label")["cnt"].sum().reset_index()
+    fig_season_count = px.bar(season_count, x="musim_label",
                               y="cnt", title="Season-wise Bike Share Count")
     st.plotly_chart(fig_season_count, use_container_width=True,
                     height=400, width=600)
@@ -70,11 +72,27 @@ with col2:
     # Weather situation-wise bike share count
     # st.subheader("Weather Situation-wise Bike Share Count")
 
-    weather_count = data.groupby("weathersit")["cnt"].sum().reset_index()
-    fig_weather_count = px.bar(weather_count, x="weathersit",
+    # Membuat mapping dari angka cuaca ke deskripsi
+    weather_mapping = {
+        1: "Cerah",
+        2: "Kabut",
+        3: "Hujan Ringan",
+        4: "Ekstrem"
+    }
+
+    # Mengubah kolom weathersit menjadi kategori deskriptif
+    data["cuaca_label"] = data["weathersit"].replace(weather_mapping)
+
+    # Mengelompokkan data berdasarkan kategori cuaca yang baru
+    weather_count = data.groupby("cuaca_label")["cnt"].sum().reset_index()
+
+    # Membuat bar chart dengan deskripsi cuaca
+    fig_weather_count = px.bar(weather_count, x="cuaca_label",
                                y="cnt", title="Weather Situation-wise Bike Share Count")
+
     # Mengatur tinggi dan lebar gambar
-    st.plotly_chart(fig_weather_count, use_container_width=True,height=400, width=800)
+    st.plotly_chart(fig_weather_count, use_container_width=True, height=400, width=800)
+
 
 
 # Hourly bike share count
