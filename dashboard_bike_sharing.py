@@ -1,6 +1,6 @@
-# Nama          : R. Muhammad Luqman Harjito
-# Email         : lukmanmsoediro@gmail.com
-# Id Dicoding   : muhammad_luqman
+# Nama          : Ratnasari
+# Email         : ratnasss676@gmail.com
+# Id Dicoding   : ratnasari_v8it
 
 # Import Library
 import streamlit as st
@@ -41,7 +41,7 @@ if st.sidebar.checkbox("Show Summary Statistics"):
     st.write(data.describe())
 
 
-st.sidebar.markdown('**Cuaca:**')
+st.sidebar.markdown('*Cuaca:*')
 st.sidebar.markdown('Cuaca Cerah / Berawan: Clear, Few clouds, Partly cloudy')
 st.sidebar.markdown('Kabut / Awan Tebal: Mist, Cloudy, Broken clouds, Fog')
 st.sidebar.markdown('Hujan Ringan / Salju: Light Rain, Light Snow, Scattered clouds')
